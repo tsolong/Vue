@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue</title>
+</head>
+<body>
+
+<div id="app">
+    <p :title="messageTitle" v-html="message"></p>
+    <input type="text" v-model="message">
+    <p v-if="show">现在你看到我了</p>
+    <!--<p>{{num ? num : "默认值为0"}}</p>-->
+    <ul>
+        <li v-for="(item, index) in items" v-bind:data-id="'list-' + item.id">{{index + 1}} - {{item.name}}</li>
+    </ul>
+    <p :title="filterText | myFilter1('123')">{{filterText | myFilter1('123') | myFilter2('456')}}</p>
+    <p>{{tip}}</p>
+    <p>{{reversedTip}}</p>
+    <!--<ol>
+        <todo-item></todo-item>
+    </ol>-->
+    <button v-on:click="reverseMessage" v-bind:disabled="show">逆转消息</button>
+    <button @click="reverseMessage">@click 简写</button>
+</div>
+
+<script src="js/vue.js"></script>
+<script>
+    var myApp = new Vue({
+        el: '#app',
+        data: {
+            message: '<span style="color: #ff0000;">hello vue.js</span>',
+            messageTitle: '页面加载于 ' + new Date(),
+            filterText: 'filter',
+            tip: 'hello',
+            show: true,
+            items: [
+                {id: 50, name: '小张', age: 20},
+                {id: 60, name: '小李', age: 21},
+                {id: 70, name: '小王', age: 22}
+            ]
+        },
+        methods: {
+            reverseMessage: function(){
+                //console.log(this);
+                this.message = this.message.split('').reverse().join('');
+            }
+        },
+        created: function(){
+            //console.log('message is: ' + this.message);
+        },
+        //过滤器
+        filters: {
+            myFilter1: function(value, arg2){
+                return arg2 + value;
+            },
+            myFilter2: function(value, arg2){
+                return value + arg2;
+            }
+        },
+        //计算属性
+        computed: {
+            reversedTip: function(){
+                return this.tip.split('').reverse().join('');
+            }
+        }
+    });
+
+    //注册组件
+    /*Vue.component('todo-item', {
+        template: '<li>这是一个待办项</li>'
+    });*/
+</script>
+
+</body>
+</html>
