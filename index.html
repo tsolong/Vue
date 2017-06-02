@@ -19,6 +19,9 @@
     <p>{{reversedTip}}</p>
     <p>{{fullName}}</p>
     <p>{{fullNameSet}}</p>
+    <p :class="myClass" class="selfClass">class and style</p>
+    <p :class="myClassComputed">computed class</p>
+    <p :class="[myClass, myClassComputed, tip, {classA: isActive}, 'stringClass']" class="selfClass">array class</p>
     <!--<ol>
         <todo-item></todo-item>
     </ol>-->
@@ -38,6 +41,11 @@
             show: true,
             firstName: 'tso',
             lastName: 'long',
+            isActive: true,
+            myClass: {
+                active: true,
+                hover: true
+            },
             items: [
                 {id: 50, name: '小张', age: 20},
                 {id: 60, name: '小李', age: 21},
@@ -85,6 +93,12 @@
                     var names = newValue.split(' ');
                     this.firstName = names[0];
                     this.lastName = names[names.length - 1];
+                }
+            },
+            //计算class
+            myClassComputed: function(){
+                return {
+                    activeComputed: this.isActive
                 }
             }
         }
