@@ -22,6 +22,11 @@
     <p :class="myClass" class="selfClass">class and style</p>
     <p :class="myClassComputed">computed class</p>
     <p :class="[myClass, myClassComputed, tip, {classA: isActive}, 'stringClass']" class="selfClass">array class</p>
+    <p :style="{color: '#ff0000', fontSize: '20px'}">bind style</p>
+    <p :style="myStyle">bind style object</p>
+    <p :style="myStyleComputed">bind style computed</p>
+    <p :style="[myStyle, myStyleTwo]">bind style array</p>
+    <p :style="{display: ['-webkit-box', '-ms-flexbox', 'flex'], color: ['#ff0000', 'blue']}">bind style 多重值</p>
     <!--<ol>
         <todo-item></todo-item>
     </ol>-->
@@ -45,6 +50,17 @@
             myClass: {
                 active: true,
                 hover: true
+            },
+            color: '#00a65a',
+            fontSize: '20px',
+            myStyle: {
+                color: '#ff0000',
+                fontSize: '40px'
+            },
+            myStyleTwo: {
+                color: '#fff',
+                backgroundColor: '#000',
+                transform: 'rotate(5deg)'
             },
             items: [
                 {id: 50, name: '小张', age: 20},
@@ -99,6 +115,13 @@
             myClassComputed: function(){
                 return {
                     activeComputed: this.isActive
+                }
+            },
+            //计算style
+            myStyleComputed: function(){
+                return {
+                    color: this.color,
+                    fontSize: this.fontSize
                 }
             }
         }
