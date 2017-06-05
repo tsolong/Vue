@@ -7,31 +7,64 @@
 <body>
 
 <div id="app">
+
     <p :title="messageTitle" v-html="message"></p>
     <input type="text" v-model="message">
     <p v-if="show">现在你看到我了</p>
     <!--<p>{{num ? num : "默认值为0"}}</p>-->
+
     <ul>
         <li v-for="(item, index) in items" v-bind:data-id="'list-' + item.id">{{index + 1}} - {{item.name}}</li>
     </ul>
+
     <p :title="filterText | myFilter1('123')">{{filterText | myFilter1('123') | myFilter2('456')}}</p>
+
     <p>{{tip}}</p>
     <p>{{reversedTip}}</p>
     <p>{{fullName}}</p>
     <p>{{fullNameSet}}</p>
+
     <p :class="myClass" class="selfClass">class and style</p>
     <p :class="myClassComputed">computed class</p>
     <p :class="[myClass, myClassComputed, tip, {classA: isActive}, 'stringClass']" class="selfClass">array class</p>
+
     <p :style="{color: '#ff0000', fontSize: '20px'}">bind style</p>
     <p :style="myStyle">bind style object</p>
     <p :style="myStyleComputed">bind style computed</p>
     <p :style="[myStyle, myStyleTwo]">bind style array</p>
     <p :style="{display: ['-webkit-box', '-ms-flexbox', 'flex'], color: ['#ff0000', 'blue']}">bind style 多重值</p>
+
+    <p v-if="ok">yes</p>
+    <p v-else>no</p>
+
+    <template v-if="ok">
+        <p>1</p>
+        <p>2</p>
+    </template>
+
+    <div v-if="type === 'A'">A</div>
+    <div v-else-if="type === 'B'">B</div>
+    <div v-else-if="type === 'C'">C</div>
+    <div v-else>Not A/B/C</div>
+
+    <template v-if="loginType === 'username'">
+        <label>Username</label>
+        <input type="text" placeholder="Enter your username" key="username-input">
+    </template>
+    <template v-else>
+        <label>Email</label>
+        <input type="text" placeholder="Enter your email address" key="email-input">
+    </template>
+    <button type="button" @click="toggleLoginType">Toggle login type</button>
+
+    <p v-show="show">v-show</p>
+
     <!--<ol>
         <todo-item></todo-item>
     </ol>-->
     <button v-on:click="reverseMessage" v-bind:disabled="show">逆转消息</button>
     <button @click="reverseMessage">@click 简写</button>
+
 </div>
 
 <script src="js/vue.js"></script>
@@ -66,12 +99,18 @@
                 {id: 50, name: '小张', age: 20},
                 {id: 60, name: '小李', age: 21},
                 {id: 70, name: '小王', age: 22}
-            ]
+            ],
+            ok: true,
+            type: 'A',
+            loginType: 'username'
         },
         methods: {
             reverseMessage: function(){
                 //console.log(this);
                 this.message = this.message.split('').reverse().join('');
+            },
+            toggleLoginType: function () {
+                this.loginType = (this.loginType === 'username') ? 'emial' : 'username';
             }
         },
         created: function(){
