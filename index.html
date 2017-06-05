@@ -70,19 +70,32 @@
         <li v-for="(n, index) in 10">{{index}} - {{n}}</li>
     </ul>
 
-    <!--<ol>
-        <todo-item></todo-item>
-    </ol>-->
     <button v-on:click="reverseMessage" v-bind:disabled="show">逆转消息</button>
     <button @click="reverseMessage">@click 简写</button>
+
+    <ol>
+        <todo-item v-for="item in groceryList" :todo="item" :tip="tip"></todo-item>
+    </ol>
 
 </div>
 
 <script src="js/vue.js"></script>
 <script>
+
+    //定义组件
+    Vue.component('todo-item', {
+        props: ['todo', 'tip'],
+        template: '<li>{{todo.text}} - {{tip}}</li>'
+    });
+
     var myApp = new Vue({
         el: '#app',
         data: {
+            groceryList: [
+                { text: '蔬菜' },
+                { text: '奶酪' },
+                { text: '随便其他什么人吃的东西' }
+            ],
             message: '<span style="color: #ff0000;">hello vue.js</span>',
             messageTitle: '页面加载于 ' + new Date(),
             filterText: 'filter',
@@ -177,10 +190,6 @@
         }
     });
 
-    //注册组件
-    /*Vue.component('todo-item', {
-        template: '<li>这是一个待办项</li>'
-    });*/
 </script>
 
 </body>
