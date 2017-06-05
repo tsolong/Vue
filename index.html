@@ -13,10 +13,6 @@
     <p v-if="show">现在你看到我了</p>
     <!--<p>{{num ? num : "默认值为0"}}</p>-->
 
-    <ul>
-        <li v-for="(item, index) in items" v-bind:data-id="'list-' + item.id">{{index + 1}} - {{item.name}}</li>
-    </ul>
-
     <p :title="filterText | myFilter1('123')">{{filterText | myFilter1('123') | myFilter2('456')}}</p>
 
     <p>{{tip}}</p>
@@ -59,6 +55,21 @@
 
     <p v-show="show">v-show</p>
 
+    <ul>
+        <template v-for="(item, index) in items">
+            <li>{{parentMessage}} - {{index + 1}} - {{item.message}}</li>
+            <li class="divider"></li>
+        </template>
+    </ul>
+
+    <ul>
+        <li v-for="(value, key, index) in myStyle">{{index}} - {{key}} : {{value}}</li>
+    </ul>
+
+    <ul>
+        <li v-for="(n, index) in 10">{{index}} - {{n}}</li>
+    </ul>
+
     <!--<ol>
         <todo-item></todo-item>
     </ol>-->
@@ -95,10 +106,10 @@
                 backgroundColor: '#000',
                 transform: 'rotate(5deg)'
             },
+            parentMessage: 'Parent',
             items: [
-                {id: 50, name: '小张', age: 20},
-                {id: 60, name: '小李', age: 21},
-                {id: 70, name: '小王', age: 22}
+                {message: 'Foo'},
+                {message: 'Bar'}
             ],
             ok: true,
             type: 'A',
