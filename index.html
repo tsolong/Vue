@@ -67,7 +67,7 @@
     </ul>
 
     <ul>
-        <li v-for="(n, index) in 10">{{index}} - {{n}}</li>
+        <li v-for="(n, index) in 10" v-if="n%2==0">{{index}} - {{n}}</li>
     </ul>
 
     <button v-on:click="reverseMessage" v-bind:disabled="show">逆转消息</button>
@@ -76,6 +76,28 @@
     <ol>
         <todo-item v-for="item in groceryList" :todo="item" :tip="tip"></todo-item>
     </ol>
+
+    <ul>
+        <li v-for="n in evenNumbers">{{n}}</li>
+    </ul>
+
+    <ul>
+        <li v-for="n in even(numbers)">{{n}}</li>
+    </ul>
+
+    <div>
+        <button @click="counter++">增加1</button>
+        <p>这个按钮被点击了{{counter}}次</p>
+    </div>
+
+    <div>
+        <button @click="greet">greet</button>
+    </div>
+
+    <div>
+        <button @click="say('hi', $event)">Say hi</button>
+        <button @click="say('what', $event)">Say what</button>
+    </div>
 
 </div>
 
@@ -91,10 +113,13 @@
     var myApp = new Vue({
         el: '#app',
         data: {
+            name: 'Vue.js',
+            counter: 0,
+            numbers: [1, 2, 3, 4, 5],
             groceryList: [
-                { text: '蔬菜' },
-                { text: '奶酪' },
-                { text: '随便其他什么人吃的东西' }
+                {text: '蔬菜'},
+                {text: '奶酪'},
+                {text: '随便其他什么人吃的东西'}
             ],
             message: '<span style="color: #ff0000;">hello vue.js</span>',
             messageTitle: '页面加载于 ' + new Date(),
@@ -129,45 +154,59 @@
             loginType: 'username'
         },
         methods: {
-            reverseMessage: function(){
+            reverseMessage: function () {
                 //console.log(this);
                 this.message = this.message.split('').reverse().join('');
             },
             toggleLoginType: function () {
                 this.loginType = (this.loginType === 'username') ? 'emial' : 'username';
+            },
+            //数组过滤方法，并建立数据副本
+            even: function (numbers) {
+                return numbers.filter(function (number) {
+                    return number % 2 === 0;
+                })
+            },
+            greet: function (event) {
+                alert('Hello ' + this.name + '!');
+                alert(event.target.nodeName);
+            },
+            say: function (message, event) {
+                alert(message);
+                alert(event.target.innerHTML);
             }
         },
-        created: function(){
+        created: function () {
             //console.log('message is: ' + this.message);
         },
         //过滤器
         filters: {
-            myFilter1: function(value, arg2){
+            myFilter1: function (value, arg2) {
                 return arg2 + value;
             },
-            myFilter2: function(value, arg2){
+            myFilter2: function (value, arg2) {
                 return value + arg2;
             }
         },
         //计算属性
         computed: {
-            reversedTip: function(){
+            reversedTip: function () {
                 return this.tip.split('').reverse().join('');
             },
             //利用计算属性生成全名
-            fullName: function(){
+            fullName: function () {
                 console.log('getter-0');
                 return this.firstName + ' ' + this.lastName;
             },
             //添加setter
             fullNameSet: {
                 //getter
-                get: function(){
+                get: function () {
                     console.log('getter-1');
                     return this.firstName + ' ' + this.lastName;
                 },
                 //setter
-                set: function(newValue){
+                set: function (newValue) {
                     console.log('setter');
                     var names = newValue.split(' ');
                     this.firstName = names[0];
@@ -175,17 +214,23 @@
                 }
             },
             //计算class
-            myClassComputed: function(){
+            myClassComputed: function () {
                 return {
                     activeComputed: this.isActive
                 }
             },
             //计算style
-            myStyleComputed: function(){
+            myStyleComputed: function () {
                 return {
                     color: this.color,
                     fontSize: this.fontSize
                 }
+            },
+            //过滤数组，并生成一个数组副本
+            evenNumbers: function () {
+                return this.numbers.filter(function (number) {
+                    return number % 2 === 0;
+                })
             }
         }
     });
