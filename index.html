@@ -99,6 +99,10 @@
         <button @click="say('what', $event)">Say what</button>
     </div>
 
+    <div>
+        <p @click="doP">123456<a href="http://www.baidu.com/" target="_blank" @click="doa">baidu</a></p>
+    </div>
+
 </div>
 
 <script src="js/vue.js"></script>
@@ -169,11 +173,11 @@
             },
             greet: function (event) {
                 alert('Hello ' + this.name + '!');
-                alert(event.target.nodeName);
+                event && alert(event.target.nodeName);
             },
             say: function (message, event) {
                 alert(message);
-                alert(event.target.innerHTML);
+                event && alert(event.target.innerHTML);
             }
         },
         created: function () {
