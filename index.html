@@ -100,7 +100,10 @@
     </div>
 
     <div>
-        <p @click="doP">123456<a href="http://www.baidu.com/" target="_blank" @click="doa">baidu</a></p>
+        <p @click="doP">事件修饰符<a href="http://www.baidu.com/" target="_blank" @click.prevent.stop="doA">www.baidu.com</a>
+        </p>
+        <p @click.once="doP">once</p>
+        <input type="text" @keyup.enter="doKeyUp">
     </div>
 
 </div>
@@ -178,6 +181,15 @@
             say: function (message, event) {
                 alert(message);
                 event && alert(event.target.innerHTML);
+            },
+            doP: function () {
+                console.log('p event');
+            },
+            doA: function () {
+                console.log('a event');
+            },
+            doKeyUp: function () {
+                console.log('keyup');
             }
         },
         created: function () {
