@@ -73,10 +73,6 @@
     <button v-on:click="reverseMessage" v-bind:disabled="show">逆转消息</button>
     <button @click="reverseMessage">@click 简写</button>
 
-    <ol>
-        <todo-item v-for="item in groceryList" :todo="item" :tip="tip"></todo-item>
-    </ol>
-
     <ul>
         <li v-for="n in evenNumbers">{{n}}</li>
     </ul>
@@ -147,6 +143,10 @@
         </select>
         <p>selected: {{selected2}}</p>
     </div>
+
+    <ol>
+        <li is="todo-item" v-for="item in groceryList" :todo="item" :tip="tip"></li>
+    </ol>
 
 </div>
 
